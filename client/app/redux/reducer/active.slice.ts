@@ -17,7 +17,6 @@ export const activeSlice = createSlice({
     reducers: {
         MEMBERS: (state, action) => {
             const { data } = action.payload as any;
-            console.log("🚀 ~ file: active.slice.ts:20 ~ data:", data)
 
             state.members= data.map((user: any) => ({
                 id: user.id, name: user.name,email: user.email

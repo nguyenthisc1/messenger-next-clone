@@ -4,7 +4,7 @@ import { MEMBERS } from "../redux/reducer/active.slice";
 const usersApi = api.injectEndpoints({
     endpoints: (builder) => ({
         getListUserNotCurrent: builder.query<GetUserResponse,  string >({
-            query: (body) => ({url: `users/list?email=${body}`, method: 'GET'}),
+            query: (params) => ({url: `users/list?email=${params}`, method: 'GET'}),
         }),
         getListUser: builder.query<GetUserResponse, void>({
             query: () => ({url: `users/list`, method: 'GET'}),

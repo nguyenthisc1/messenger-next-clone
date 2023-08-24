@@ -10,7 +10,6 @@ const authApi = api.injectEndpoints({
                 const { data } = await api.queryFulfilled;
                 // Set the returned token to Store
                 storage.setAccessToken(data.token);
-                storage.setValueIntoKey('user', data.email)
                 // Mutate the state
                 api.dispatch(LOGIN_SUCCESS(data));
             },
@@ -19,8 +18,8 @@ const authApi = api.injectEndpoints({
             query: (body) => ({ url: "/auth/register", method: "POST", body }),
         }),
         getProfile: builder.query<FullProfile, string>({
-            query: (body) => ({
-                url: `/auth/profile?email=${body}`,
+            query: (params) => ({
+                url: `/auth/profile?email=${params}`,
                 method: "GET",
             }),
             onQueryStarted: async (_, api) => {

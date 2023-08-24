@@ -1,15 +1,15 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { checkUser, getFullProfileModel } from "../models/users/UsersModel.js";
+import { checkUser, getFullProfile } from "../models/UsersModel.js";
 import getPrismaInstace from "../utils/Prismaclient.js";
 
-export const loginController = async (req, res) => {
+export const loginController = async (request, response) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = request.body;
 
         const user = await checkUser(email);
         if (!user) {
-            return res
+            return response
                 .status(422)
                 .json({ message: "Email or Password is not correct" });
         }
@@ -20,7 +20,7 @@ export const loginController = async (req, res) => {
         );
 
         if (!checkPassword)
-            return res
+            return response
                 .status(422)
                 .json({ message: "Email or Password is not correct" });
 
@@ -28,24 +28,23 @@ export const loginController = async (req, res) => {
             expiresIn: 60 * 60 * 24,
         });
 
-        req.session.user = user.email;
-        return res
+        return response
             .status(200)
             .header("token", token)
             .json({ ...user, token });
     } catch (error) {
         console.log(error, "LOGIN_ERROR");
-        res.status(500).json(error);
+        response.status(500).json(error);
     }
 };
 
-export const registerController = async (req, res) => {
+export const registerController = async (request, response) => {
     try {
         const prisma = getPrismaInstace();
-        const { email, name, password } = req.body;
+        const { email, name, password } = request.body;
 
         if (!email || !name || !password) {
-            return res.status(400).json({ message: "Missing info" });
+            return response.status(400).json({ message: "Missing info" });
         }
 
         const checkEmailExis = await prisma.user.findUnique({
@@ -55,7 +54,7 @@ export const registerController = async (req, res) => {
         });
 
         if (checkEmailExis) {
-            return res.status(422).json({ message: "Email is exist" });
+            return response.status(422).json({ message: "Email is exist" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -68,22 +67,22 @@ export const registerController = async (req, res) => {
             },
         });
 
-        return res.status(200).json(newUser);
+        return response.status(200).json(newUser);
     } catch (error) {
         console.log(error, "REGISTRATION_ERROR");
-        res.status(500).json(error);
+        response.status(500).json(error);
     }
 };
 
-export const getProfileController = async (req, res) => {
+export const getProfileController = async (request, response) => {
     try {
-        const { email } = req.query;
+        const { email } = request.query;
 
         if (!email) {
-            return res.status(422).json({ message: "Email not found!" });
+            return response.status(422).json({ message: "Email not found!" });
         }
 
-        const user = await getFullProfileModel(email);
+        const user = await getFullProfile(email);
   
         if (!user) {
             return res
@@ -91,9 +90,9 @@ export const getProfileController = async (req, res) => {
                 .json({ message: "User not found!" });
         }
 
-        return res.status(200).json(user);
+        return response.status(200).json(user);
     } catch (error) {
         console.log(error, "GETPROFILE_ERROR");
-        res.status(500).json(error);
+        response.status(500).json(error);
     }
 };

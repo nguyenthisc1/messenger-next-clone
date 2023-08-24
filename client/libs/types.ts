@@ -1,4 +1,3 @@
-
 interface LoginRequest {
     email: string;
     password: string;
@@ -52,30 +51,67 @@ interface RegisterRequest {
     password: string;
 }
 
-interface GetUserResponse  {
-    data: Array<UserItem>
+interface GetUserResponse {
+    data: Array<UserItem>;
 }
 
 interface UserItem {
-    id?: string
-    name?: string
-    email?: string
-    image?: any
-    emailVerified?: any
-    conversationIds?: any[]
-    seenMessageIds?: any[]
+    id?: string;
+    name?: string;
+    email?: string;
+    image?: any;
+    emailVerified?: any;
+    conversationIds?: any[];
+    seenMessageIds?: any[];
 }
 
 interface GetUserRequest {
-    email: string
+    email: string;
 }
 
 interface User {
+    id: string;
+    name: string;
+    email: string;
+    image: any;
+    emailVerified: any;
+    conversationIds: any[];
+    seenMessageIds: any[];
+}
+
+interface ConversationRequest {
+    id: string;
+    createdAt: string;
+    lastMessageAt: string;
+    name: string;
+    isGroup: boolean;
+    messagesIds: string[];
+    userIds: string[];
+    users: FullProfile[];
+}
+
+interface ConversationResponse {
+    email: string;
+    userId: string;
+    isGroup?: boolean;
+    members?: string[];
+    name?: string;
+}
+
+
+interface ConversationsRequest {
+    data: Array<conversationItem>
+}
+
+
+interface conversationItem {
     id: string
-    name: string
-    email: string
-    image: any
-    emailVerified: any
-    conversationIds: any[]
-    seenMessageIds: any[]
+    createdAt: string
+    lastMessageAt: string
+    name: any
+    isGroup: any
+    messagesIds: any[]
+    userIds: string[]
+    users: FullProfile[]
+    messages: any[]
 }

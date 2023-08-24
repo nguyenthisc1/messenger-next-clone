@@ -12,9 +12,8 @@ import storage from "@/app/helpers/localStorage";
 export default function DesktopSidebar() {
     const routes = useRoutes();
     const { user } = useAppSelector((state) => state.auth)    
-    const userStorage = storage.getValueFromKey('user')
     const [isOpen, setIsOpen] = useState(false);
-    const currentUser = useGetProfileQuery(user ? user.email : userStorage);
+    const currentUser = useGetProfileQuery(user.email);
 
     return (
         <div

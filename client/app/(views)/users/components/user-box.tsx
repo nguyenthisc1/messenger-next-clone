@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
+import { useConversationMutation } from "@/app/apis/conversations.api";
 import Avatar from "@/app/components/avatar";
 import LoadingModal from "@/app/components/modals/loading-modal";
-import { User } from "@prisma/client";
-import axios from "axios";
+import { useAppSelector } from "@/app/redux/store";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
@@ -13,18 +13,19 @@ interface UserBoxProps {
 
 export default function UserBox({ data }: UserBoxProps) {
     const router = useRouter();
+    const { user } = useAppSelector((state) => state.auth);
+
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleClick = useCallback(() => {
+    const [converstationApi] = useConversationMutation();
+    const handleClick = useCallback(async () => {
         setIsLoading(true);
-
-        // axios
-        //     .post("/api/conversations", { userId: data.id })
-        //     .then((data) => {
-        //         router.push(`/conversations/${data.data.id}`);
-        //     })
-        //     .finally(() => setIsLoading(false));
-    }, [data, router]);
+        await converstationApi({ userId: data.id as string, email: user.email })
+            .unwrap()
+            .then(() => {
+                router.push(`/conversations/${data.id}`);
+            })
+            .finally(() => setIsLoading(false));
+    }, [converstationApi, data.id, router, user.email]);
 
     return (
         <>

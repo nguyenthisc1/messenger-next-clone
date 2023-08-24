@@ -9,8 +9,7 @@ import UserBox from "./user-box";
 
 export default function UserList() {
     const { user } = useAppSelector((state) => state.auth);
-    const userStorage = storage.getValueFromKey('user')
-    const getListUserNotCurrentApi = useGetListUserNotCurrentQuery(user ? user.email : userStorage);
+    const getListUserNotCurrentApi = useGetListUserNotCurrentQuery(user.email);
     
     return (
         <aside
