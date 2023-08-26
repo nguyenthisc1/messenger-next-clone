@@ -1,6 +1,6 @@
 import { getUsersNotCurrentUser } from "../models/UsersModel.js";
 
-export const getUsersController = async (request, response) => {
+export const getUsersAction = async (request, response) => {
     try {
         const { email } = request.query;
 
@@ -13,7 +13,7 @@ export const getUsersController = async (request, response) => {
 
         return response.status(200).json({data: users});
     } catch (error) {
-        console.log(error, "GETUSERS_ERROR");
+        console.log(error, "GET_USERS_ERROR");
         response.status(500).json(error);
     }
 };

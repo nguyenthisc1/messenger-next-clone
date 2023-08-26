@@ -1,6 +1,6 @@
 "use client";
 
-import { useConversationMutation } from "@/app/apis/conversations.api";
+import { useCreateConversationMutation } from "@/app/apis/conversations.api";
 import Avatar from "@/app/components/avatar";
 import LoadingModal from "@/app/components/modals/loading-modal";
 import { useAppSelector } from "@/app/redux/store";
@@ -16,7 +16,7 @@ export default function UserBox({ data }: UserBoxProps) {
     const { user } = useAppSelector((state) => state.auth);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [converstationApi] = useConversationMutation();
+    const [converstationApi] = useCreateConversationMutation();
     const handleClick = useCallback(async () => {
         setIsLoading(true);
         await converstationApi({ userId: data.id as string, email: user.email })

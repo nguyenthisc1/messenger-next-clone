@@ -4,6 +4,7 @@ import cors from "cors";
 import AuthRoutes from "./routes/AuthRoutes.js";
 import UserRoutes from "./routes/UsersRoutes.js";
 import ConversationRoutes from './routes/ConversationsRoutes.js'
+import MessagesRoutes from './routes/MessagesRoutes.js'
 import passport from "passport";
 import session from "express-session";
 
@@ -26,6 +27,7 @@ app.use(passport.initialize());
 app.use("/api/auth", AuthRoutes);
 app.use("/api/users", UserRoutes);
 app.use("/api/conversations", ConversationRoutes)
+app.use("/api/messages", MessagesRoutes)
 
 const server = app.listen(process.env.PORT, () => {
     console.log(`Server Started on port ${process.env.PORT}`);

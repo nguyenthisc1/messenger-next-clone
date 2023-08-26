@@ -112,6 +112,34 @@ interface conversationItem {
     isGroup: any
     messagesIds: any[]
     userIds: string[]
-    users: FullProfile[]
+    users: FullProfile[] | User[]
     messages: any[]
 }
+
+
+interface MessagesResponse {
+    data: any
+}
+
+interface Message {
+    id: string
+    body: string
+    image: string
+    createdAt: string
+    seenIds: string[]
+    seen: User[] | FullProfile[]
+    conversationId: string
+    senderId: any
+    sender: any
+
+}
+
+type FullMessageType = Message & {
+    sender: User | FullProfile,
+    seen: User[] | FullProfile[]
+};
+
+type FullConversationType = conversationItem & {
+    users: User[] | FullProfile[];
+    messages: FullMessageType[]
+};

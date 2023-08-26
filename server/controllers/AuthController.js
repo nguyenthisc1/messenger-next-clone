@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { checkUser, getFullProfile } from "../models/UsersModel.js";
 import getPrismaInstace from "../utils/Prismaclient.js";
 
-export const loginController = async (request, response) => {
+export const loginAction = async (request, response) => {
     try {
         const { email, password } = request.body;
 
@@ -38,7 +38,7 @@ export const loginController = async (request, response) => {
     }
 };
 
-export const registerController = async (request, response) => {
+export const registerAction = async (request, response) => {
     try {
         const prisma = getPrismaInstace();
         const { email, name, password } = request.body;
@@ -74,7 +74,7 @@ export const registerController = async (request, response) => {
     }
 };
 
-export const getProfileController = async (request, response) => {
+export const getProfileAction = async (request, response) => {
     try {
         const { email } = request.query;
 
@@ -92,7 +92,7 @@ export const getProfileController = async (request, response) => {
 
         return response.status(200).json(user);
     } catch (error) {
-        console.log(error, "GETPROFILE_ERROR");
+        console.log(error, "GET_PROFILE_ERROR");
         response.status(500).json(error);
     }
 };
