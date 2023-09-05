@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 interface AvatarGroupProps {
-  users?: User[] | FullProfile[];
+  users?: User[] ;
 };
 
 
@@ -16,7 +16,7 @@ export default function AvatarGroup({ users = [] }: AvatarGroupProps) {
   }
 
   return (
-    <div className="relative h-11 w-11">
+    <div className="relative h-11 w-11 min-h-[50px]">
       {slicedUsers.map((user, index) => (
         <div
           key={user.id}

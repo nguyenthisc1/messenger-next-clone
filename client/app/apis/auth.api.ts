@@ -1,3 +1,4 @@
+import { method } from "lodash";
 import { api } from ".";
 import storage from "../helpers/localStorage";
 import { LOGIN_SUCCESS, SET_USER } from "../redux/reducer/auth.slice";
@@ -26,7 +27,12 @@ const authApi = api.injectEndpoints({
                 const { data } = await api.queryFulfilled;
                 api.dispatch(SET_USER(data));
             },
+            providesTags: ['auth'],
         }),
+        updateProfile: builder.mutation<UpdateProfileResponse, UpdateProfileResquest>({
+            query: (body) => ({ url: '/auth/update', method: 'PATCH', body }),
+            invalidatesTags: ['auth']
+        })
     }),
 });
 
@@ -35,4 +41,5 @@ export const {
     useGetProfileQuery,
     useRegisterMutation,
     useLazyGetProfileQuery,
+    useUpdateProfileMutation
 } = authApi;

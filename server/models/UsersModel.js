@@ -37,6 +37,7 @@ export const getUsersNotCurrentUser = async (currentUser) => {
 
 export const getFullProfile = async (email) => {
     const prisma = getPrismaInstace();
+
     const user = await prisma.user.findUnique({
         where: { email },
         select: {
@@ -54,3 +55,19 @@ export const getFullProfile = async (email) => {
 
     return user;
 };
+
+export const updateProfile = async (body) => {
+    const prisma = getPrismaInstace();
+
+    const updatedUser = await prisma.user.update({
+        where: {
+            id: body.currentUser.id
+        },
+        data: {
+            image: body.image,
+            name: body.name
+        },
+    });
+
+    return updatedUser
+}

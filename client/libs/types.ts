@@ -19,16 +19,16 @@ interface LoginResponse {
 }
 
 interface FullProfile {
-    id: number;
-    name: string;
-    email: string;
-    image: string;
-    emailVerified: string;
+    id?: number;
+    name?: string;
+    email?: string;
+    image?: string;
+    emailVerified?: string;
     status?: number;
-    createdAt: string;
-    updatedAt: string;
-    conversationIds: any[];
-    seenMessageIds: any[];
+    createdAt?: string;
+    updatedAt?: string;
+    conversationIds?: any[];
+    seenMessageIds?: any[];
 }
 
 interface RegisterResponse {
@@ -49,6 +49,16 @@ interface RegisterRequest {
     name: string;
     email: string;
     password: string;
+}
+
+interface UpdateProfileResponse {
+    data: FullProfile
+}
+
+interface UpdateProfileResquest {
+    email?: string
+    name?: string
+    image?: string
 }
 
 interface GetUserResponse {
@@ -79,7 +89,7 @@ interface User {
     seenMessageIds: any[];
 }
 
-interface ConversationRequest {
+interface ConversationResponse {
     id: string;
     createdAt: string;
     lastMessageAt: string;
@@ -90,21 +100,25 @@ interface ConversationRequest {
     users: FullProfile[];
 }
 
-interface ConversationResponse {
+interface ConversationRequest {
     email: string;
-    userId: string;
+    userId?: string;
     isGroup?: boolean;
     members?: string[];
     name?: string;
 }
 
 
-interface ConversationsRequest {
-    data: Array<conversationItem>
+interface ConversationsResponse {
+    data: Array<ConversationItem>
+}
+
+interface ConversationResponse {
+    data: ConversationItem
 }
 
 
-interface conversationItem {
+interface ConversationItem {
     id: string
     createdAt: string
     lastMessageAt: string
@@ -112,7 +126,7 @@ interface conversationItem {
     isGroup: any
     messagesIds: any[]
     userIds: string[]
-    users: FullProfile[] | User[]
+    users: User[]
     messages: any[]
 }
 
@@ -127,7 +141,7 @@ interface Message {
     image: string
     createdAt: string
     seenIds: string[]
-    seen: User[] | FullProfile[]
+    seen: User[]
     conversationId: string
     senderId: any
     sender: any
@@ -135,11 +149,71 @@ interface Message {
 }
 
 type FullMessageType = Message & {
-    sender: User | FullProfile,
-    seen: User[] | FullProfile[]
+    sender: User,
+    seen: User[]
 };
 
-type FullConversationType = conversationItem & {
-    users: User[] | FullProfile[];
+type FullConversationType = ConversationItem & {
+    users: User[];
     messages: FullMessageType[]
 };
+
+interface SeenConversationResponse {
+    data: ConversationItem
+}
+
+interface SeenConversationRequest {
+    email?: string,
+    conversationId?: string
+}
+
+interface MessageItem {
+    userId: number
+    id: string
+    body: string
+    image: any
+    createdAt: string
+    seenIds: string[]
+    conversationId: string
+    senderId: string
+    seen: Seen[]
+    sender: Sender
+}
+
+interface Seen {
+    id: string
+    name: string
+    email: string
+    emailVerified: any
+    image: any
+    hashedPassword: string
+    createdAt: string
+    updatedAt: string
+    conversationIds: string[]
+    seenMessageIds: string[]
+}
+
+interface Sender {
+    id: string
+    name: string
+    email: string
+    emailVerified: any
+    image: any
+    hashedPassword: string
+    createdAt: string
+    updatedAt: string
+    conversationIds: string[]
+    seenMessageIds: string[]
+}
+
+interface PostMessageResponse {
+    data: MessageItem
+}
+
+interface PostMessageRequest {
+    email?: string,
+    message?: string,
+    image?: string
+    conversationId?: string
+}
+

@@ -27,10 +27,10 @@ export const createOrGetConversationById = async (body, currentUser) => {
   const prisma = getPrismaInstace();
 
   if (body.isGroup) {
-    const newConversation = await prisma.conversation.create({
+    const newGroupConversation = await prisma.conversation.create({
       data: {
         name: body.name,
-        isGroup: body.group,
+        isGroup: body.isGroup,
         users: {
           connect: [
             ...body.members.map((member) => ({
@@ -46,7 +46,7 @@ export const createOrGetConversationById = async (body, currentUser) => {
         users: true,
       },
     });
-    return newConversation;
+    return newGroupConversation;
   } else {
     const newConversation = await prisma.conversation.create({
       data: {
@@ -109,3 +109,46 @@ export const getConversationById = async (conversationId) => {
 
   return getConversation;
 };
+
+export const deleteConversationById = async (conversationId, currentUser) => {
+  const prisma = getPrismaInstace();
+
+  const deleteConversation = await prisma.conversation.deleteMany({
+    where: {
+      id: conversationId,
+      userIds: {
+        hasSome: [currentUser.id]
+      },
+    },
+  })
+
+  return deleteConversation
+}
+
+export const updateConversation = async (body) => {
+  const prisma = getPrismaInstace();
+
+  const updatedConversation = await prisma.conversation.update({
+    where: {
+      id: body.conversationId
+    },
+    data: {
+      lastMessageAt: new Date(),
+      messages: {
+        connect: {
+          id: body.newMessage.id
+        }
+      }
+    },
+    include: {
+      users: true,
+      messages: {
+        include: {
+          seen: true
+        }
+      }
+    }
+  });
+
+  return updatedConversation
+}

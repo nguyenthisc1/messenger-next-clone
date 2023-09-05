@@ -18,10 +18,10 @@ export const activeSlice = createSlice({
         MEMBERS: (state, action) => {
             const { data } = action.payload as any;
 
-            state.members= data.map((user: any) => ({
-                id: user.id, name: user.name,email: user.email
+            state.members = data.map((user: any) => ({
+                id: user.id, name: user.name, email: user.email
             }));
-        ;
+            ;
         },
     },
 });

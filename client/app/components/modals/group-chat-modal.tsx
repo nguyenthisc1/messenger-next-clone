@@ -1,21 +1,21 @@
 "use client";
 
-import axios from "axios";
-import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { User } from "@prisma/client";
 
+import { useCreateConversationMutation } from "@/app/apis/conversations.api";
+import { useAppSelector } from "@/app/redux/store";
 import { toast } from "react-hot-toast";
-import Modal from "./modal";
-import { Input } from "../inputs/input";
 import Button from "../button";
+import { Input } from "../inputs/input";
 import Select from "../inputs/select";
+import Modal from "./modal";
 
 interface GroupChatModalProps {
     isOpen?: boolean;
     onClose: () => void;
-    users: User[];
+    users: UserItem[];
 }
 
 export default function GroupChatModal({
@@ -23,9 +23,10 @@ export default function GroupChatModal({
     onClose,
     users = [],
 }: GroupChatModalProps) {
+    const { user: currentUser } = useAppSelector((state) => state.auth)
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-
+    const [createConversationApi] = useCreateConversationMutation()
     const {
         register,
         handleSubmit,
@@ -34,6 +35,8 @@ export default function GroupChatModal({
         formState: { errors },
     } = useForm<FieldValues>({
         defaultValues: {
+            userId: '',
+            email: '',
             name: "",
             members: [],
         },
@@ -43,15 +46,15 @@ export default function GroupChatModal({
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
+        onClose();
 
-        axios
-            .post("/api/conversations", {
-                ...data,
-                isGroup: true,
-            })
+        createConversationApi({
+            ...data,
+            isGroup: true,
+            email: currentUser.email,
+        }).unwrap()
             .then(() => {
                 router.refresh();
-                onClose();
             })
             .catch(() => toast.error("Something went wrong!"))
             .finally(() => setIsLoading(false));

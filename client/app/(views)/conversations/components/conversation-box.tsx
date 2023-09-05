@@ -8,20 +8,19 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useMemo } from 'react';
 
 interface ConversationBoxProps {
-  data: conversationItem,
+  data: ConversationItem,
   selected?: boolean;
 }
 
 
 export default function ConversationBox({ data, selected }: ConversationBoxProps) {
-
   const { user } = useAppSelector((state) => state.auth)
   const otherUser = useOtherUser(data);
   const router = useRouter();
 
   const handleClick = useCallback(() => {
     router.push(`/conversations/${data.id}`);
-}, [data, router]);
+  }, [data, router]);
 
   const lastMessage = useMemo(() => {
     const messages = data.messages || [];

@@ -27,8 +27,8 @@ const storage =
 const persistConfig = {
     key: "app",
     storage: storage,
-    whitelist: ["auth"],
-    blacklist: ["active"],
+    whitelist: ["auth",],
+    blacklist: ["active", "messages"],
 };
 
 const pReducer = persistReducer(persistConfig, rootReducer);
@@ -37,7 +37,7 @@ const store = configureStore({
     reducer: pReducer,
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-           serializableCheck: false,
+            serializableCheck: false,
         }).concat([api.middleware]),
     devTools: process.env.NODE_ENV !== "production",
 });

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { checkUser, getFullProfile } from "../models/UsersModel.js";
+import { checkUser, getFullProfile, updateProfile } from "../models/UsersModel.js";
 import getPrismaInstace from "../utils/Prismaclient.js";
 
 export const loginAction = async (request, response) => {
@@ -83,7 +83,7 @@ export const getProfileAction = async (request, response) => {
         }
 
         const user = await getFullProfile(email);
-  
+
         if (!user) {
             return res
                 .status(422)
@@ -96,3 +96,23 @@ export const getProfileAction = async (request, response) => {
         response.status(500).json(error);
     }
 };
+
+export const updateProfileAction = async (request, response) => {
+    try {
+        const { email, name, image } = request.body
+
+        if (!email) {
+            return response.status(400).json({ message: "Invalid Data" });
+        }
+
+        const currentUser = await checkUser(email)
+
+        const updatedprofile = await updateProfile({currentUser, name, image})
+
+        return response.status(200).json({ data: updatedprofile })
+
+    } catch (error) {
+        console.log(error, "UPDATE_PROFILE_ERROR");
+        response.status(500).json(error);
+    }
+}

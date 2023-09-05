@@ -1,15 +1,25 @@
-import express from "express";
-import dotenv from "dotenv";
+import bodyParser from 'body-parser';
 import cors from "cors";
-import AuthRoutes from "./routes/AuthRoutes.js";
-import UserRoutes from "./routes/UsersRoutes.js";
-import ConversationRoutes from './routes/ConversationsRoutes.js'
-import MessagesRoutes from './routes/MessagesRoutes.js'
-import passport from "passport";
+import dotenv from "dotenv";
+import express from "express";
 import session from "express-session";
+import passport from "passport";
+import path from 'path';
+import AuthRoutes from "./routes/AuthRoutes.js";
+import ConversationsRoutes from './routes/ConversationsRoutes.js';
+import MessagesRoutes from './routes/MessagesRoutes.js';
+import UserRoutes from "./routes/UsersRoutes.js";
+
 
 dotenv.config();
 const app = express();
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+// app.use(express.static(path.join(__dirname, '/../public')));
 app.use(
     session({
         secret: "somesecret",
@@ -26,9 +36,15 @@ app.use(passport.initialize());
 
 app.use("/api/auth", AuthRoutes);
 app.use("/api/users", UserRoutes);
-app.use("/api/conversations", ConversationRoutes)
+app.use("/api/conversations", ConversationsRoutes)
 app.use("/api/messages", MessagesRoutes)
 
 const server = app.listen(process.env.PORT, () => {
     console.log(`Server Started on port ${process.env.PORT}`);
 });
+
+
+
+
+
+

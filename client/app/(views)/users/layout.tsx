@@ -7,12 +7,10 @@ export default function UsersLayout({
     children: React.ReactNode;
 }) {
 
-    
-
     return (
         <Sidebar>
             <div className="h-full">
-                <UserList/>
+                <UserList />
                 {children}
             </div>
         </Sidebar>

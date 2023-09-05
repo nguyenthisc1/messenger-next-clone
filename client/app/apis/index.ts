@@ -21,5 +21,5 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQuery,
   endpoints: (builder) => ({}),
-  // tagTypes: ['broker','bitlot'],
+  tagTypes: ['conversations','users', 'messages', 'auth'],
 })
