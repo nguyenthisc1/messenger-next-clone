@@ -2,8 +2,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import storage from '../helpers/localStorage'
 
+
+console.log(process.env.PORT);
+
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://messenger-app-clone.onrender.com/api',
+  baseUrl: process.env.NEXT_HOST! || 'https://messenger-app-clone.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
