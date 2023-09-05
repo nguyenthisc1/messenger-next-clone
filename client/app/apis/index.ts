@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import storage from '../helpers/localStorage'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://messenger-app-clone.onrender.com/',
+  baseUrl: 'https://messenger-app-clone.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
