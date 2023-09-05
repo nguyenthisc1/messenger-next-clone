@@ -39,7 +39,7 @@ app.use("/api/users", UserRoutes);
 app.use("/api/conversations", ConversationsRoutes)
 app.use("/api/messages", MessagesRoutes)
 
-const server = app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
     console.log(`Server Started on port ${process.env.PORT}`);
 });
 
