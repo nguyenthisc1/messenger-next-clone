@@ -10,6 +10,7 @@ interface AvatarProps {
 
 export default function Avatar({ user }: AvatarProps) {
     const { members } = useAppSelector((state) => state.active);
+    console.log("🚀 ~ file: avatar.tsx:13 ~ Avatar ~ members:", members)
 
     useGetListUserQuery()
     const isActive =
