@@ -4,10 +4,10 @@ import { useSeenConversationQuery } from '@/app/apis/conversations.api';
 import { useGetMessagesQuery } from '@/app/apis/messages.api';
 import useConversation from '@/app/hooks/useConversation';
 import { useAppSelector } from '@/app/redux/store';
-import { pusherClient } from '@/app/libs/pusher';
 import { find } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import MessageBox from './messages-box';
+import { pusherClient } from '@/app/libs/pusher';
 
 export default function Body() {
     const { user } = useAppSelector((state) => state.auth)

@@ -10,8 +10,8 @@ import clsx from 'clsx'
 import { useEffect, useMemo, useState } from 'react'
 import { MdOutlineGroupAdd } from 'react-icons/md'
 import ConversationBox from './conversation-box'
-import { pusherClient } from '@/app/libs/pusher'
 import { find } from 'lodash'
+import { pusherClient } from '@/app/libs/pusher'
 
 export default function ConversationList() {
   const [items, setItems] = useState<FullConversationType[]>([])

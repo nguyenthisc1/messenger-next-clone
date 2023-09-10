@@ -1,6 +1,8 @@
+
 import { api } from ".";
 import storage from "../helpers/localStorage";
 import { LOGIN_SUCCESS, SET_USER } from "../redux/reducer/auth.slice";
+import Cookies from 'js-cookie';
 
 const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -11,6 +13,7 @@ const authApi = api.injectEndpoints({
                 // Set the returned token to Store
                 storage.setAccessToken(data.token);
                 storage.setValueIntoKey('user_id', data.id)
+                Cookies.set('user_id', data.id)
                 // Mutate the state
                 api.dispatch(LOGIN_SUCCESS(data));
             },
@@ -32,7 +35,7 @@ const authApi = api.injectEndpoints({
         updateProfile: builder.mutation<UpdateProfileResponse, UpdateProfileResquest>({
             query: (body) => ({ url: '/auth/update', method: 'PATCH', body }),
             invalidatesTags: ['auth']
-        })
+        }),
     }),
 });
 

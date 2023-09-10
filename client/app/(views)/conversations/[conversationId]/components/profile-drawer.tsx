@@ -31,14 +31,14 @@ export default function ProfileDrawer({ isOpen, onClose, data }: ProfileDrawerPr
 
     const { members } = useAppSelector((state) => state.active);
 
-    const isActive = members.indexOf(otherUser?.email!) !== -1;
+    const isActive = members.indexOf(otherUser?.id!) !== -1;
 
     const statusText = useMemo(() => {
         if (data.isGroup) {
             return `${data.users.length} members`;
         }
 
-        return isActive ? 'Active' : 'Offline'
+        return isActive ? 'Online' : 'Offline'
     }, [data, isActive]);
 
 

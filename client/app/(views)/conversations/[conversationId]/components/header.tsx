@@ -13,13 +13,13 @@ export default function Header({ conversation }: { conversation: ConversationIte
     const otherUser = useOtherUser(conversation);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const { members } = useAppSelector((state) => state.active);
-    const isActive = members.indexOf(otherUser?.email!) !== -1;
+    const isActive = members.indexOf(otherUser?.id!) !== -1;
     const statusText = useMemo(() => {
         if (conversation?.isGroup) {
             return `${conversation?.users.length} members`;
         }
 
-        return isActive ? 'Active' : 'Offline'
+        return isActive ? 'Online' : 'Offline'
     }, [conversation, isActive]);
 
     return (

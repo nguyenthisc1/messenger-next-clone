@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useGetListUserQuery } from "../apis/users.api";
 import { useAppSelector } from "../redux/store";
+import { useRouter } from "next/navigation";
 
 interface AvatarProps {
     user?: UserItem | FullProfile;
@@ -10,8 +11,6 @@ interface AvatarProps {
 
 export default function Avatar({ user }: AvatarProps) {
     const { members } = useAppSelector((state) => state.active);
-    console.log("🚀 ~ file: avatar.tsx:13 ~ Avatar ~ members:", members)
-
     useGetListUserQuery()
     const isActive =
         members.indexOf(user?.id!) !== -1;
