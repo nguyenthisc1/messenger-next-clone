@@ -27,7 +27,7 @@ const storage =
 const persistConfig = {
     key: "app",
     storage: storage,
-    whitelist: ["",],
+    whitelist: ["auth",],
     blacklist: ["active", "messages"],
 };
 
