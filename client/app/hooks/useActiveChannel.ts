@@ -1,19 +1,17 @@
 import { Channel, Members } from "pusher-js";
 import { useEffect, useState } from "react";
-import storage from "../helpers/localStorage";
+import { getPusherClient } from "../libs/pusher";
 import { ADD_ACTIVE, REMOVE_ACTIVE, SET_ACTIVE } from "../redux/reducer/active.slice";
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { getPusherClient } from "../libs/pusher";
 
 const useActiveChannel = () => {
     const dispatch = useAppDispatch()
     const [activeChannel, setActiveChannel] = useState<Channel | any>(null);
-    const userID = storage.getValueFromKey('user_id')
     const { user } = useAppSelector((state) => state.auth)
-    const pusherClient = getPusherClient()
 
     useEffect(() => {
         if (user) {
+            const pusherClient = getPusherClient(user.id)
             let channel = activeChannel;
 
             if (!channel && user) {
@@ -48,7 +46,7 @@ const useActiveChannel = () => {
             }
         }
 
-    }, [activeChannel, dispatch, user, userID]);
+    }, [activeChannel, dispatch, user]);
 }
 
 export default useActiveChannel;

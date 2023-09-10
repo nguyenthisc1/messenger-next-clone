@@ -13,7 +13,7 @@ const nextConfig = {
     ]
   },
   env: {
-    PORT: 'https://messenger-app-clone.onrender.com',
+    PORT: 'http://localhost:3005',
     NEXT_PUBLIC_PUSHER_APP_KEY: '4347c7804bf431133929',
     PUSHER_APP_ID: '1660971',
     PUSHER_SECRET: '5a4fb5a89fc5c6f0bacf',

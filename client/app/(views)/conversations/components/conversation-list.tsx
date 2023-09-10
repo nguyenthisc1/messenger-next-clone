@@ -21,7 +21,7 @@ export default function ConversationList() {
   const conversationsApi = useGetConversationsQuery(user.email)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { conversationId, isOpen } = useConversation()
-  const pusherClient = getPusherClient()
+  const pusherClient = getPusherClient(user.id)
 
   useEffect(() => {
     if (conversationsApi.isSuccess) {

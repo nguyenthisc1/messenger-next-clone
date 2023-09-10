@@ -15,7 +15,7 @@ export default function Body() {
     const { conversationId } = useConversation();
     const bottomRef = useRef<HTMLDivElement>(null);
     const [messages, setMessages] = useState<FullMessageType[]>([])
-    const pusherClient = getPusherClient()
+    const pusherClient = getPusherClient(user.id)
     const messagesApi = useGetMessagesQuery(conversationId);
     const getSeenConversationsApi = useSeenConversationQuery({ conversationId, email: user.email })
 
@@ -59,7 +59,7 @@ export default function Body() {
             pusherClient.unbind('messages:new')
         }
 
-    }, [conversationId, getSeenConversationsApi, getSeenConversationsApi.isFetching, messagesApi, user.email])
+    }, [conversationId, getSeenConversationsApi, getSeenConversationsApi.isFetching, messagesApi, pusherClient, user.email])
 
     return (
         <div className="flex-1 overflow-y-auto">
