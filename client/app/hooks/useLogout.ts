@@ -11,6 +11,8 @@ export function useLogout() {
 
     const logout = useCallback(() => {
         storage.removeAccessToken()
+        storage.removePersist()
+        storage.removeValueIntoKey('email')
         dispatch(LOGOUT_SUCCESS())
         router.push(PATH.HOME)
     }, [dispatch, router])

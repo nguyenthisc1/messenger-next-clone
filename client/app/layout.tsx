@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import ToasterContext from "./context/toaster-context";
 import "./globals.css";
 import { ReduxProviders } from "./redux/provider";
+import ActiveStatus from "./components/active-status";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <ReduxProviders>
                     <ToasterContext />
+                    <ActiveStatus />
                     {children}
                 </ReduxProviders>
             </body>

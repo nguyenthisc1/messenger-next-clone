@@ -10,9 +10,10 @@ interface AvatarProps {
 
 export default function Avatar({ user }: AvatarProps) {
     const { members } = useAppSelector((state) => state.active);
-    const getListUserApi = useGetListUserQuery()
+
+    useGetListUserQuery()
     const isActive =
-        members.map((member: any) => member.id).indexOf(user?.id!) !== -1;
+        members.indexOf(user?.id!) !== -1;
 
     return (
         <div className="relative">
@@ -24,7 +25,7 @@ export default function Avatar({ user }: AvatarProps) {
                 />
             </div>
             {isActive ? (
-                <span className="absolute block rounded-full bg-green-500 ring-2 ring-white top-0 right-0 h-2 w-2 md:h-3 md:w-3"/>
+                <span className="absolute block rounded-full bg-green-500 ring-2 ring-white top-0 right-0 h-2 w-2 md:h-3 md:w-3" />
             ) : null}
         </div>
     );

@@ -29,7 +29,7 @@ export default function MobileFooter() {
         >
             {routes.map((route) => (
                 <MobileItem
-                    key={route.href}
+                    key={route.label}
                     href={route?.href}
                     active={route.active}
                     icon={route.icon}

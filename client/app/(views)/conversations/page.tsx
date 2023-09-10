@@ -2,23 +2,22 @@
 
 import EmptyState from "@/app/components/empty-state"
 import { PATH } from "@/app/constants/path"
-import storage from "@/app/helpers/localStorage"
 import useConversation from "@/app/hooks/useConversation"
+import { useAppSelector } from "@/app/redux/store"
 import clsx from "clsx"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
 export default function Conversations() {
   const { isOpen } = useConversation()
-  const token = storage.getAccessToken()
+  const { isLoggedIn } = useAppSelector((state) => state.auth)
   const router = useRouter()
-
   useEffect(() => {
-    if (!token) {
-      router.push(PATH.HOME)
+    if (!isLoggedIn) {
+      return router.push(PATH.HOME)
     }
-  }, [router, token])
-  
+  }, [isLoggedIn, router])
+
   return (
     <div className={clsx(
       'lg:pl-80 h-full lg:block',

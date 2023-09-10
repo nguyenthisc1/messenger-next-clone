@@ -19,7 +19,8 @@ interface LoginResponse {
 }
 
 interface FullProfile {
-    id?: number;
+    id?: string;
+    pusherSessionId?: string
     name?: string;
     email?: string;
     image?: string;
@@ -67,6 +68,7 @@ interface GetUserResponse {
 
 interface UserItem {
     id?: string;
+    pusherSessionId?: string;
     name?: string;
     email?: string;
     image?: any;

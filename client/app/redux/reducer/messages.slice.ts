@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 interface InitialState {
-    messages: FullMessageType[]
+    messages: FullMessageType
 }
 
 const initialState = {
@@ -15,14 +15,10 @@ export const messagesSlice = createSlice({
     reducers: {
         MESSAGES: (state, action) => {
             const { data } = action.payload
-            state.messages = data
-        },
-        ADD_MESSAGE: (state, action) => {
-            const data = action.payload
-            console.log("🚀 ~ file: messages.slice.ts:22 ~ action:", data)
+            state.messages = data.data
         }
     }
 })
 
 
-export const { MESSAGES, ADD_MESSAGE } = messagesSlice.actions
+export const { MESSAGES } = messagesSlice.actions

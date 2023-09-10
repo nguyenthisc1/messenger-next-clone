@@ -14,7 +14,6 @@ interface MessageBoxProps {
     isLast?: boolean;
 }
 
-
 export default function MessageBox({ data, isLast }: MessageBoxProps) {
     const { user } = useAppSelector(state => state.auth)
     const [imageModalOpen, setImageModalOpen] = useState(false);

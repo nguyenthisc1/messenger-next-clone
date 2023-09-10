@@ -1,20 +1,20 @@
 'use client'
 
 import { useSeenConversationQuery } from '@/app/apis/conversations.api';
+import { useGetMessagesQuery } from '@/app/apis/messages.api';
 import useConversation from '@/app/hooks/useConversation';
 import { useAppSelector } from '@/app/redux/store';
+import { pusherClient } from '@/app/libs/pusher';
 import { find } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import MessageBox from './messages-box';
-import { useGetMessagesQuery } from '@/app/apis/messages.api';
-import { pusherClient } from '@/libs/pusher';
 
 export default function Body() {
     const { user } = useAppSelector((state) => state.auth)
     const { conversationId } = useConversation();
     const bottomRef = useRef<HTMLDivElement>(null);
-    console.log("🚀 ~ file: body.tsx:16 ~ Body ~ bottomRef:", bottomRef)
     const [messages, setMessages] = useState<FullMessageType[]>([])
+
     const messagesApi = useGetMessagesQuery(conversationId);
     const getSeenConversationsApi = useSeenConversationQuery({ conversationId, email: user.email })
 

@@ -1,4 +1,3 @@
-import { method } from "lodash";
 import { api } from ".";
 import storage from "../helpers/localStorage";
 import { LOGIN_SUCCESS, SET_USER } from "../redux/reducer/auth.slice";

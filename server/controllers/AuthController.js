@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { checkUser, getFullProfile, updateProfile } from "../models/UsersModel.js";
 import getPrismaInstace from "../utils/Prismaclient.js";
+import pusherClient from "../utils/Pusherclient.js";
 
 export const loginAction = async (request, response) => {
     try {
@@ -20,7 +21,7 @@ export const loginAction = async (request, response) => {
         );
 
         if (!checkPassword)
-            return response
+            return responses
                 .status(422)
                 .json({ message: "Email or Password is not correct" });
 
@@ -107,12 +108,26 @@ export const updateProfileAction = async (request, response) => {
 
         const currentUser = await checkUser(email)
 
-        const updatedprofile = await updateProfile({currentUser, name, image})
+        const updatedprofile = await updateProfile({ currentUser, name, image })
 
         return response.status(200).json({ data: updatedprofile })
 
     } catch (error) {
         console.log(error, "UPDATE_PROFILE_ERROR");
         response.status(500).json(error);
+    }
+}
+
+export const pusherAuthChannel = async (request, response) => {
+    try {
+        const { socket_id, channel_name, user_id } = request.body
+        const socketId = socket_id
+        const channel = channel_name
+        const presenceData = { user_id };
+        const authResponse = pusherClient.authorizeChannel(socketId, channel, presenceData);
+        return response.status(200).json(authResponse);
+    } catch (error) {
+        console.log('AUTH_PUSHER_ERROR', error);
+        return response.status(500).json(error)
     }
 }

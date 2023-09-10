@@ -9,7 +9,7 @@ import AuthRoutes from "./routes/AuthRoutes.js";
 import ConversationsRoutes from './routes/ConversationsRoutes.js';
 import MessagesRoutes from './routes/MessagesRoutes.js';
 import UserRoutes from "./routes/UsersRoutes.js";
-
+import cookieParser from 'cookie-parser'
 
 dotenv.config();
 const app = express();
@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-// app.use(express.static(path.join(__dirname, '/../public')));
+app.use(cookieParser())
 app.use(
     session({
         secret: "somesecret",

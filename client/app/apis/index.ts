@@ -2,12 +2,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import storage from '../helpers/localStorage'
 
-
-console.log(process.env.PORT);
-
-
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_HOST! || 'https://messenger-app-clone.onrender.com/api',
+  baseUrl: `${process.env.PORT!}/api`,
   headers: {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',
@@ -25,5 +21,5 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: baseQuery,
   endpoints: (builder) => ({}),
-  tagTypes: ['conversations','users', 'messages', 'auth'],
+  tagTypes: ['conversations', 'users', 'messages', 'auth'],
 })

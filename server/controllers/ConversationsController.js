@@ -38,6 +38,14 @@ export const createOrGetConversationAction = async (request, response) => {
 
         const newConversation = await createOrGetConversationById({ userId }, currentUser)
 
+
+        // Update all connections with new conversation
+        newConversation.users.map((user) => {
+            if (user.email) {
+                pusherClient.trigger(user.email, 'conversation:new', newConversation);
+            }
+        });
+
         return response.status(200).json({ data: newConversation })
 
     } catch (error) {
@@ -125,9 +133,8 @@ export const deleteConversationAction = async (request, response) => {
 }
 
 export const seenConversationAction = async (request, response) => {
-    const prisma = getPrismaInstance();
-
     try {
+        const prisma = getPrismaInstance();
         const { email } = request.query
         const { id: conversationId } = request.params
 

@@ -4,7 +4,6 @@ import { useCreateConversationMutation } from "@/app/apis/conversations.api";
 import Avatar from "@/app/components/avatar";
 import LoadingModal from "@/app/components/modals/loading-modal";
 import { useAppSelector } from "@/app/redux/store";
-import { error } from "console";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 

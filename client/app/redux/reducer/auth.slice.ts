@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface InitialState {
-  user: any | null
+  user: any
   isLoggedIn: boolean
   expiresIn: number | null
 }
@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     LOGIN_SUCCESS: (state, action) => {
-      const { email, name, id, image,emailVerified,createdAt } = action.payload as any
+      const { email, name, id, image, emailVerified, createdAt } = action.payload as any
       state.user = {
         id,
         email,
@@ -31,7 +31,7 @@ export const authSlice = createSlice({
     },
     LOGOUT_SUCCESS: () => ({ ...initialState }),
     SET_USER: (state, { payload }: PayloadAction<FullProfile>) => {
-      state.user = payload
+      state.user = { ...state.user, ...payload }
       state.isLoggedIn = true
     },
   },
