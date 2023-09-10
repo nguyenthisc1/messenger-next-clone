@@ -10,6 +10,7 @@ const authApi = api.injectEndpoints({
                 const { data } = await api.queryFulfilled;
                 // Set the returned token to Store
                 storage.setAccessToken(data.token);
+                storage.setValueIntoKey('user_id', data.id)
                 // Mutate the state
                 api.dispatch(LOGIN_SUCCESS(data));
             },
