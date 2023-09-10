@@ -10,17 +10,29 @@ export const pusher = new Pusher({
 
 });
 
-
-export const pusherClient = new PusherClient(
-    process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
-    {
-        channelAuthorization: {
-            endpoint: `${process.env.PORT}/api/auth/pusher`,
-            params: {
-                user_id: storage.getValueFromKey('user_id')
-            },
-            transport: 'ajax',
+const pusherClientOption: PusherClient | any = {
+    channelAuthorization: {
+        endpoint: `${process.env.PORT}/api/auth/pusher`,
+        params: {
+            user_id: storage.getValueFromKey('user_id')
         },
-        cluster: 'ap1',
+        transport: 'ajax',
+    },
+    cluster: 'ap1',
+}
+
+
+let pusherClient: PusherClient | null = null
+
+
+export function getPusherClient() {
+    if (!pusherClient) {
+        pusherClient = new PusherClient(
+            process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
+            pusherClientOption
+        )
     }
-)
+    return pusherClient;
+}
+
+

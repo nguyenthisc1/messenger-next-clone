@@ -11,7 +11,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { MdOutlineGroupAdd } from 'react-icons/md'
 import ConversationBox from './conversation-box'
 import { find } from 'lodash'
-import { pusherClient } from '@/app/libs/pusher'
+import { getPusherClient } from '@/app/libs/pusher'
+
 
 export default function ConversationList() {
   const [items, setItems] = useState<FullConversationType[]>([])
@@ -20,6 +21,7 @@ export default function ConversationList() {
   const conversationsApi = useGetConversationsQuery(user.email)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { conversationId, isOpen } = useConversation()
+  const pusherClient = getPusherClient()
 
   useEffect(() => {
     if (conversationsApi.isSuccess) {

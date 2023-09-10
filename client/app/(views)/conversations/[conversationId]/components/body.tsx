@@ -7,14 +7,15 @@ import { useAppSelector } from '@/app/redux/store';
 import { find } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import MessageBox from './messages-box';
-import { pusherClient } from '@/app/libs/pusher';
+import { getPusherClient } from '@/app/libs/pusher';
+
 
 export default function Body() {
     const { user } = useAppSelector((state) => state.auth)
     const { conversationId } = useConversation();
     const bottomRef = useRef<HTMLDivElement>(null);
     const [messages, setMessages] = useState<FullMessageType[]>([])
-
+    const pusherClient = getPusherClient()
     const messagesApi = useGetMessagesQuery(conversationId);
     const getSeenConversationsApi = useSeenConversationQuery({ conversationId, email: user.email })
 
